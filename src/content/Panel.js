@@ -11,10 +11,9 @@ const Panel = props => {
 			<RandomColourButton unityContent={props.unityContent}/>
 			<CookieBaker unityContent={props.unityContent}/>
 			<Score unityContent={props.unityContent}/>
-			<UnityLoader unityContent={props.unityContent}/>
+			{props.isLoading && <UnityLoader unityContent={props.unityContent} />}
 		</div>
 	);
 }
 
 export default Panel;
-
