@@ -5,8 +5,7 @@
 
 👽✨🌊
 
-- Example project / tutorial for hosting Unity3D WebGL build as a static webpage on Heroku (using create-react-app).
--  **Test [here](https://unity3d-react-boilerplate.herokuapp.com/).**
+- Based on https://github.com/mariaheine/unity3d-react-boilerplate with few changes to make it testable with cypress.
 
 👽✨🌊
 
@@ -22,7 +21,7 @@
 
 To update the site by pushing changes to heroku remote:
 
-    $ yarn build 
+    $ yarn build
     $ git commit -m "wow :o"
     $ git push heroku master
 To open it:
@@ -59,7 +58,7 @@ Your `package.json` should look something like this (no babel, no webpack config
 	 - Can be set to quite low value when using WebAssembly
  - Compression Format
 	 - Safari doesn't support Brotli compression, it doesn't support fullscreen and curosor hiding neither. If you expect many Safari-only users to visit your Unity project on the web, then you need to carefully plan around some issues [eg. no WebGL 2.0, no Brotli compression](https://docs.unity3d.com/Manual/webgl-browsercompatibility.html).
- - WebAssembly 
+ - WebAssembly
 	 - Just 'tick' this option for the [magic to happen](https://blogs.unity3d.com/2018/08/15/webassembly-is-here/).
 	 - Since Unity 2018.1 its no longer considered 'experimental' :unicorn:
 
@@ -77,7 +76,7 @@ Your `package.json` should look something like this (no babel, no webpack config
 
 **b:tulip:.** Copy entire Unity build folder (mentioned above) into your `public` webapp folder.
 
-**c:hibiscus:.** Follow [Quick Start](https://github.com/jeffreylanters/react-unity-webgl/wiki/Quick-Start-Guide) guide (it's really *quick*) and for 
+**c:hibiscus:.** Follow [Quick Start](https://github.com/jeffreylanters/react-unity-webgl/wiki/Quick-Start-Guide) guide (it's really *quick*) and for
 
 The most important part is loading
 ```js
@@ -101,9 +100,9 @@ export class App extends React.Component {
 
 For more info about UnityContent check out [Mr. Lanters' github wiki](https://github.com/jeffreylanters/react-unity-webgl/wiki/Unity-Content) (and don't forget to star his amazing repo :tada:).
 
-**d:blossom:.**  After these easy steps you should be ready to test your Unity webapp by simply running `$ npm run start` command in your console. Uploading to Heroku is just as easy using 
+**d:blossom:.**  After these easy steps you should be ready to test your Unity webapp by simply running `$ npm run start` command in your console. Uploading to Heroku is just as easy using
 
-> If you cloned my project you would have to use [yarn](https://github.com/yarnpkg/yarn) instead:  
+> If you cloned my project you would have to use [yarn](https://github.com/yarnpkg/yarn) instead:
 > `$ yarn start`
 
 :warning: If your Unity project runs only locally and doesn't load on heroku hosting service, check if your `.gitignore` doesn't mention `/build` directory (this may happen if you created your git repo with Unity .gitignore preset).
@@ -129,10 +128,10 @@ this.props.unityContent.send(
    10
 );
 ```
-:warning: You cannot directly use template literals when passing a string. Write it first to a variable, then pass it instead. 
+:warning: You cannot directly use template literals when passing a string. Write it first to a variable, then pass it instead.
  ```javascript
  let  mouseCoords  =  `${this.state.pageX}  ${this.state.pageY};
- 
+
  if(this.state.isLoaded  ===  true) {
     this.unityContent.send(
        "TextDisplayer",
@@ -145,8 +144,8 @@ this.props.unityContent.send(
 3. #### :palm_tree: **Calling** :phone: a method with more than one parameter - possible workaround.
 
 As mentioned above GameObject.SendMessage(), here as `this.unityContent.send(...)`,  may only pass as value one argument that can be either a number or a string.
- 
-One possible workaround is passing multiple values in a string and then parsing it inside Unity method 
+
+One possible workaround is passing multiple values in a string and then parsing it inside Unity method
 > #### Though I wouldn't do that in a method 'ticked' many many times per second :hear_no_evil:
 
 In above :warning: about template literals we passed two numeric coords inside `mouseCoords` string variable to a method `UpdateDoubleMousePosition` inside `TextDisplayer` GameObject. To interpret that string as two separate numbers in C#:
@@ -156,12 +155,12 @@ public void UpdateDoubleMousePosition(string mouseCoords)
    string[] coords = mouseCoords.Split(' ');
 
    int[] coordsNumerical = new int[2];
-   
+
    for(int i = 0; i < coords.Length; i++)
    {
       coordsNumerical[i] = Int32.Parse(coords[i]);
    }
-   
+
    TextY.text = coords[0];
    TextX.text = coords[1];
 }
